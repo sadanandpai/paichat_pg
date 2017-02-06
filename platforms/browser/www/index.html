@@ -1,0 +1,60 @@
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript" src="https://paichat.herokuapp.com/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="public/js/jquery.min.js"></script>
+    <script type="text/javascript" src="public/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="public/css/bootstrap.min.css" />
+	<style>
+		body{
+			font-size: 15px;
+		}
+		#messages {
+			width: 90%;
+			height: 32em;
+			border: 1px solid grey;
+			overflow: auto;
+			
+		}
+	</style>
+	<script>count = 0;</script>
+</head>
+<body>
+    <div class="container">
+		<i><h2>Welcome to PaiChat</h2></i>
+		<form action="">
+			<table class="table">
+				<tr>
+					<td>
+						<input type="text" class="form-control" id="field1" />
+					</td>
+					<td>
+						<input type="text" class="form-control" id="field2" required="required" />
+					</td>
+					<td>
+						<button class="btn btn-primary" id="send">Send</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+		<script type="text/javascript">
+			var socket = io.connect('https://paichat.herokuapp.com');
+			$('form').submit(function(){
+				socket.emit('send', {username: $('#field1').val(), message: $('#field2').val()} );
+				$('#field2').val('');
+				return false;
+			});
+			socket.on('message', function(data){
+				console.log(count);
+				if(count++ >= 22)
+					$('#messages li').first().remove();
+				$('#messages').append($('<li>').text(data.username + ": " + data.message));
+			});
+		</script>
+			
+		<ul id="messages"></ul>
+	
+    </div>
+</body>
+</html>
