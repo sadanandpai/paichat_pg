@@ -7,7 +7,7 @@
     <author email="support@phonegap.com" href="http://phonegap.com">
         PhoneGap Team
     </author>
-	<gap:plugin name="cordova-plugin-whitelist"npm />
+	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
     <content src="index.html" />
     <access origin="*" />
 </widget>
